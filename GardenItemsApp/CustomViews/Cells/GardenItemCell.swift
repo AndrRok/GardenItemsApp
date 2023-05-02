@@ -85,10 +85,10 @@ class GardenItemCell: UICollectionViewCell {
         
         nameLabel.textColor = .black
         nameLabel.textContainer.maximumNumberOfLines = 5
-        nameLabel.font = .systemFont(ofSize: 24)
-        descriptionLabel.font = .systemFont(ofSize: 14)
+        nameLabel.font = .systemFont(ofSize: 16)
+        descriptionLabel.font = .systemFont(ofSize: 12)
         descriptionLabel.textColor  = .systemGray2
-        descriptionLabel.textContainer.maximumNumberOfLines = 6
+        descriptionLabel.textContainer.maximumNumberOfLines = 8
         descriptionLabel.textContainer.lineBreakMode = .byTruncatingTail
 
         NSLayoutConstraint.activate([
@@ -99,7 +99,7 @@ class GardenItemCell: UICollectionViewCell {
             descriptionLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
             descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            //descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
         ])
     }
     

@@ -9,7 +9,8 @@ import UIKit
 
 class MainVC: DataLoadingVC {
     private var timer: Timer?
-    private var pageOffset = 0
+    private var mainPageOffset = 0
+    private var searchPageOffset = 0
     private var isSearchingByRequest = Bool()
     private lazy var itemsArray: [GardenItem] = []
     private lazy var searchArray: [GardenItem]  = []
@@ -32,14 +33,14 @@ class MainVC: DataLoadingVC {
     private func configure(){
         configureNB()
         configureCollectionView()
-        getItems(pageOffSet: pageOffset)
+        getItems(pageOffSet: mainPageOffset)
     }
     
     
     //MARK: - Get API Data
     private func getItems(pageOffSet: Int){
         showLoadingView()
-        NetworkManager.shared.getItemsList(offset: pageOffset )  { [weak self] result in
+        NetworkManager.shared.getItemsList(offset: mainPageOffset )  { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let itemsResult):
@@ -53,13 +54,16 @@ class MainVC: DataLoadingVC {
     }
     
     
-    private func getSearchRequestFromAPI(request: String){
-        NetworkManager.shared.searchItems(request: request) { [weak self] result in
+    private func getSearchRequestFromAPI(request: String, offset: Int ){
+        showLoadingView()
+
+        NetworkManager.shared.searchItems(request: request, offset: offset ) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let flashSalesResult):
-                self.searchArray = flashSalesResult
+                self.searchArray.append(contentsOf: flashSalesResult)
                 reloadCollectionView()
+                self.dismissLoadingView()
             case .failure(let error):
                 self.presentCustomAllertOnMainThred(allertTitle: "Bad Stuff Happend", message: error.rawValue, butonTitle: "Ok")
             }
@@ -179,6 +183,7 @@ class MainVC: DataLoadingVC {
     @objc func textFieldDidChange(_ textField: UITextField) {
         timer?.invalidate()
         searchArray.removeAll()
+        
         switch searchTextField.text?.isEmpty{
         case true:
             DispatchQueue.main.async { [self] in
@@ -186,9 +191,10 @@ class MainVC: DataLoadingVC {
                 reloadCollectionView()
             }
         default:
+            searchPageOffset = 0
             timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false){ [self] _ in
                 isSearchingByRequest = true
-                self.getSearchRequestFromAPI(request: searchTextField.text!)
+                self.getSearchRequestFromAPI(request: searchTextField.text!, offset: searchPageOffset)
                 reloadCollectionView()
             }
         }
@@ -242,8 +248,13 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         let contentHeight = scrollView.contentSize.height//total height of data
         let height = scrollView.frame.size.height//screen height
         if offSetY > contentHeight - height{
-            pageOffset += 20
-            getItems(pageOffSet: pageOffset)
+            guard isSearchingByRequest else {
+                mainPageOffset += 20
+                getItems(pageOffSet: mainPageOffset)
+                return
+            }
+            searchPageOffset += 20
+            getSearchRequestFromAPI(request: searchTextField.text!, offset: searchPageOffset)
         }
     }
     

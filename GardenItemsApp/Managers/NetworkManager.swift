@@ -97,8 +97,8 @@ class NetworkManager {
     }
     
     
-    func searchItems(request: String, completed: @escaping (Result<[GardenItem], ErrorMessages>) -> Void) {
-        let endpoint = searchURL + request.encodeUrl
+    func searchItems(request: String, offset: Int, completed: @escaping (Result<[GardenItem], ErrorMessages>) -> Void) {
+        let endpoint = searchURL + request.encodeUrl + "&offset=" + String(offset) + "&limit=10"
         
         guard let url = URL(string: endpoint) else {
             completed(.failure(.invalidRequest))
