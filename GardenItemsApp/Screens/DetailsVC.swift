@@ -180,6 +180,7 @@ class DetailsVC: DataLoadingVC {
             i.textContainerInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
             i.isScrollEnabled = false
             i.textAlignment = .left
+            i.backgroundColor = .white
         }
         nameLabel.textColor = .black
         nameLabel.font = .systemFont(ofSize: 24)

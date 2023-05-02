@@ -144,7 +144,7 @@ class MainVC: DataLoadingVC {
     private func configureCollectionView(){
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .systemBackground
+        collectionView.backgroundColor = .white
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(GardenItemCell.self, forCellWithReuseIdentifier: GardenItemCell.reuseID)
