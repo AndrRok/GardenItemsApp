@@ -49,6 +49,7 @@ class GardenItemCell: UICollectionViewCell {
         
         imageImageView.downloadImage(fromURL: imageURL)
         DispatchQueue.main.async { [self] in
+            self.id = id
             nameLabel.text = name
             descriptionLabel.text = descriprion
         }
