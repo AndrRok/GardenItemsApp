@@ -48,7 +48,7 @@ class MainVC: DataLoadingVC {
                 reloadCollectionView()
                 self.dismissLoadingView()
             case .failure(let error):
-                self.presentCustomAllertOnMainThred(allertTitle: "Bad Stuff Happend", message: error.rawValue, butonTitle: "Ok")
+                self.presentCustomAlertOnMainThred(allertTitle: "Bad Stuff Happend", message: error.rawValue, butonTitle: "Ok")
             }
         }
     }
@@ -65,7 +65,7 @@ class MainVC: DataLoadingVC {
                 reloadCollectionView()
                 self.dismissLoadingView()
             case .failure(let error):
-                self.presentCustomAllertOnMainThred(allertTitle: "Bad Stuff Happend", message: error.rawValue, butonTitle: "Ok")
+                self.presentCustomAlertOnMainThred(allertTitle: "Bad Stuff Happend", message: error.rawValue, butonTitle: "Ok")
             }
         }
     }

@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIViewController {
-    func presentCustomAllertOnMainThred(allertTitle: String, message: String, butonTitle: String){
+    func presentCustomAlertOnMainThred(allertTitle: String, message: String, butonTitle: String){
         DispatchQueue.main.async {
             let allertVC = AlertVC(allertTitle: allertTitle, message: message, buttonTitle: butonTitle)
             allertVC.modalPresentationStyle = .overFullScreen
